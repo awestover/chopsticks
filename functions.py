@@ -2,11 +2,14 @@
 
 import random
 from drawState import *
+import pdb
 
 # is this a valid state transition?
 def validMove(lastState, nextState, mod=5):
-    switch = False
+
+    pdb.set_trace()
     hit = False
+    switch = False
 
     # wrong size!
     if len(nextState) != 4:
@@ -21,32 +24,31 @@ def validMove(lastState, nextState, mod=5):
     if lastState == nextState:
         return False
 
-    # move arround hands
-    if lastState[0] + lastState[1] == nextState[0] + nextState[1]:
-        # you didn't just switch the hand locations...
-        # that is not a real move...
-        if lastState[0] != nextState[1]:
-            switch = True
-
     # check for a hit, using the modulus
     # you didnt change your hands, so I hope you changed the other persons...
-    if lastState[0] == nextState[0] and lastState[1] == nextState[1]:
-        count = 0
-        for i in range(0, 2):
-            for j in range(2, 4):
-                if (lastState[i] + lastState[j]) % mod == nextState[j]:
+    count = 0
+    for i in range(0, 2):
+        for j in range(2, 4):
+            if (lastState[i] + lastState[j]) % mod == nextState[j]:
+                if lastState[i] != 0 and lastState[0] != 0: # 0 hit is not allowed
                     count += 1
-        if count > 1:
-            return False
-        elif count == 1:
-            hit = True
+    if lastState[0] == lastState[1]:  # cause we double count when there is ambigous hand hit data...
+        count -= 1
+    if count == 1:
+        hit = True
 
-    if switch and not hit:
-        return True
-    elif not switch and hit:
-        return True
-    else:
-        return False
+    # move arround hands
+    # you did not change your hands
+    if lastState[0] != nextState[0] and lastState[1] != nextState[1]:
+        # the sum must be the same though...
+        if lastState[0] + lastState[1] == nextState[0] + nextState[1]:
+            # you didn't just switch the hand locations...
+            # that is not a real move...
+            if lastState[0] != nextState[1]:
+                switch = True
+
+    return False  # default
+
 
 # parse a string of space seperated values to an array
 def parseState(state):
@@ -77,6 +79,7 @@ def stupidAdvanceState(state):
     r = randomState()
     while gameOver(r) == 1 or not validMove(state, r):
         r = randomState()
+        drawState(r)
     return r
 
 # computer move
@@ -84,6 +87,7 @@ def advanceState(state):
     r = randomState()
     while gameOver(r) == 1 or not validMove(state, r):
         r = randomState()
+        drawState(r)
     return r
 
 # flips the reference frame

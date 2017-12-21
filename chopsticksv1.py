@@ -18,8 +18,10 @@ shift = random.randint(0, 1)  # who goes first?
 
 while gameOver(state) == -1:
     if (turn + shift) % 2 == 0:  # computer move
+        print("My turn")
         state = advanceState(state)
     else:
+        print("Your turn")
         state = inputState(state)
     turn += 1
 
