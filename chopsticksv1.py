@@ -14,8 +14,9 @@ print("Let's begin")
 state = [1, 1, 1, 1]
 
 
-while not gameOver(state):
-
+while gameOver(state) == -1:
+    state = advanceState(state)
+    print(state)
 
 
 
