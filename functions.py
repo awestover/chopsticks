@@ -58,13 +58,15 @@ def parseState(state):
     return state
 
 # get a state from the user
-def inputState(state, mod=5):
+# note must invert state when reading in and writing out for the computer
+def inputState(s, mod=5):
+    state = invertState(s)
     drawState(state)
     nextMove = [-1, -1, -1, -1]
     while not validMove(nextMove):
         nextMove = parseState(input("input move values, space seperated\t"))
     drawState(nextMove)
-    return nextMove
+    return invertState(nextMove)
 
 # computer move
 def advanceState(state):
