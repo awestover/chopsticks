@@ -1,0 +1,4 @@
+Specific problems:
+
+Better nextMove function?
+drawHands function?
