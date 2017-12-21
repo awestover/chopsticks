@@ -63,14 +63,28 @@ def inputState(s, mod=5):
     state = invertState(s)
     drawState(state)
     nextMove = [-1, -1, -1, -1]
-    while not validMove(nextMove):
+    while not validMove(state, nextMove):
         nextMove = parseState(input("input move values, space seperated\t"))
     drawState(nextMove)
     return invertState(nextMove)
 
+# generates a random state, not neccecarily valid
+def randomState(mod=5):
+    return [random.randint(0, 4) for i in range(0, 4)]
+
+# computer move
+def stupidAdvanceState(state):
+    r = randomState()
+    while gameOver(r) == 1 or not validMove(state, r):
+        r = randomState()
+    return r
+
 # computer move
 def advanceState(state):
-    return [random.randint(0, 4) for i in range(0, 4)]
+    r = randomState()
+    while gameOver(r) == 1 or not validMove(state, r):
+        r = randomState()
+    return r
 
 # flips the reference frame
 def invertState(state):

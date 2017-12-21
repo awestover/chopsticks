@@ -8,12 +8,14 @@ v2 - genetic strategy updating
 v3 - v1.5 with mod n
 v4 - genetic mod n
 
+v5 - suicide option
+v6 - preservation option
+
+v7 - online option (Django/Flask)
 
 Conventions:
 
 
-A state is an array with 
+A state is an array with
 state = [ player_hand1, player_hand2, enemy_hand1, enemy_hand2 ]
 Note different players will observe this differently
-
-

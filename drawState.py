@@ -2,7 +2,7 @@ import pygame
 
 
 def drawState(state, mod=5):
-    print(state)
+    print("state\t" + str(state))
 
 
 # all you Max
