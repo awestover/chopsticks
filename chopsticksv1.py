@@ -14,6 +14,8 @@ print("Let's begin")
 state = [1, 1, 1, 1]
 
 
+while not gameOver(state):
+
 
 
 
