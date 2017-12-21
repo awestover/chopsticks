@@ -7,7 +7,7 @@ import pdb
 # doesn't care where the hands are
 # (ie 1343 and 3134 and 3143 and 1334 are considered)
 # all the same
-def lenientValidMove(lastState, nextState, mod=5):
+def validMove(lastState, nextState, mod=5):
     if not baseValidMove(lastState, nextState, mod):
         return False
     hit = False
@@ -87,7 +87,7 @@ def parseNoSpaceString(s):
     return [int(i) for i in s]
 
 # is this a valid state transition?
-def validMove(lastState, nextState, mod=5, base=True):
+def stupidValidMove(lastState, nextState, mod=5, base=True):
     hit = False
     switch = False
 
