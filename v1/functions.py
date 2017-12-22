@@ -3,6 +3,7 @@
 from drawState import *
 import random
 import pandas as pd
+import pdb
 
 # variables
 strategyFile = "strategy.csv"
@@ -22,7 +23,7 @@ def validMove(lastState, nextState, mod=5):
     for i in range(0, 2):
         for j in range(2, 4):
             if (lastState[i] + lastState[j]) % mod == nextState[j]:
-                if lastState[i] != 0 and lastState[0] != 0: # 0 hit is not allowed
+                if lastState[i] != 0 and lastState[j] != 0: # 0 hit is not allowed
                     count += 1
     if lastState[0] == lastState[1]:  # cause we double count when there is ambigous hand hit data...
         count -= 1
@@ -119,6 +120,7 @@ def randomState(mod=5):
 def advanceState(state):
     lookUp = lookUpNextMove(state)
     if lookUp != []:
+        pdb.set_trace()
         return random.choice(lookUp)
     else:
         r = randomState()
