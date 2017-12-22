@@ -89,52 +89,6 @@ def parseNoSpaceString(s):
     s = list(s)
     return [int(i) for i in s]
 
-# is this a valid state transition?
-def stupidValidMove(lastState, nextState, mod=5, base=True):
-    hit = False
-    switch = False
-
-    if base:
-        if not baseValidMove(lastState, nextState, mod):
-            return False
-
-    # check for a hit, using the modulus
-    # you didnt change your hands, so I hope you changed the other persons...
-    count = 0
-    for i in range(0, 2):
-        for j in range(2, 4):
-            if (lastState[i] + lastState[j]) % mod == nextState[j]:
-                if lastState[i] != 0 and lastState[0] != 0: # 0 hit is not allowed
-                    count += 1
-    if lastState[0] == lastState[1]:  # cause we double count when there is ambigous hand hit data...
-        count -= 1
-    if count == 1:
-        hit = True
-        # you can not hit and mess with hands, even if it is invalid hand messing
-        if lastState[0] != nextState[0] or lastState[1] != nextState[1]:
-            return False
-
-
-    # move arround hands
-    # you did not change your hands
-    if lastState[0] != nextState[0] and lastState[1] != nextState[1]:
-        # the sum must be the same though...
-        if lastState[0] + lastState[1] == nextState[0] + nextState[1]:
-            # you didn't just switch the hand locations...
-            # that is not a real move...
-            if lastState[0] != nextState[1]:
-                switch = True
-                # you can not switch and mess with hands, even if it is invalid hand messing
-                if lastState[2] != nextState[2] or lastState[3] != nextState[3]:
-                    return False
-
-
-    if hit and not switch:
-        return True
-    elif not hit and switch:
-        return True
-    return False
-
 
 # parse a string of space seperated values to an array
 def parseState(state):
@@ -160,14 +114,6 @@ def inputState(state, mod=5):
 # generates a random state, not neccecarily valid
 def randomState(mod=5):
     return [random.randint(0, 4) for i in range(0, 4)]
-
-# computer move
-def stupidAdvanceState(state):
-    r = randomState()
-    while gameOver(r) == 1 or not validMove(state, r):
-        r = randomState()
-        drawState(r)
-    return r
 
 # computer move
 def advanceState(state):
