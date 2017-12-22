@@ -125,7 +125,7 @@ def advanceState(state):
     lookUp = lookUpNextMove(state)
     if lookUp != []:
         pdb.set_trace()
-        return random.choice(lookUp)
+        return parseState(random.choice(lookUp))
     else:
         r = randomState()
         while gameOver(r) == 1 or not validMove(state, r):
@@ -138,7 +138,7 @@ def lookUpNextMove(lastMove):
     stratCsv = pd.read_csv(strategyFile)
     nexts = []
     for i in range(0, len(stratCsv["Previous"])):
-        if stratCsv["Previous"][i] == lastMove:
+        if stratCsv["Previous"][i] == listToString(lastMove):
             nexts.append(stratCsv["Next"][i])
     return nexts
 
