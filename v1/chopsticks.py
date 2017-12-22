@@ -1,7 +1,7 @@
 from functions import *
 import os
 
-strategyFile = "strategyv1.csv"
+strategyFile = "strategy.csv"
 
 if not os.path.exists(strategyFile):
     headDf = pd.DataFrame(columns=["Previous", "Next"])
@@ -31,7 +31,12 @@ while gameOver(state) == -1:
             state = inputState(state)
     else:
         print("Player turn")
+        # note the state assumes the current player is listed first
+        state = invertState(state)
+        # make the choice
         state = inputState(state)
+        # we must flip twice
+        state = invertState(state)
     turn += 1
 
 print("Nice game")

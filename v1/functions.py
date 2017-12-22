@@ -5,7 +5,7 @@ import random
 import pandas as pd
 
 # variables
-strategyFile = "strategyv1.csv"
+strategyFile = "strategy.csv"
 
 # doesn't care where the hands are
 # (ie 1343 and 3134 and 3143 and 1334 are considered)
@@ -147,15 +147,15 @@ def parseState(state):
 
 # get a state from the user
 # note must invert state when reading in and writing out for the computer
-def inputState(s, mod=5):
-    state = invertState(s)
+# but this is done elsewhere
+def inputState(state, mod=5):
     drawState(state)
     nextMove = [-1, -1, -1, -1]
     while not validMove(state, nextMove):
         nextMove = parseState(input("input move values, space seperated\t"))
     drawState(nextMove)
     addLookupEntry(state, nextMove)
-    return invertState(nextMove)
+    return nextMove
 
 # generates a random state, not neccecarily valid
 def randomState(mod=5):

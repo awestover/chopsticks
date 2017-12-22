@@ -13,8 +13,8 @@ def command(string):
     enter()
 
 time.sleep(3)
-os.system("rm strategyv1.csv")
-command("python chopsticksv1.py")
+os.system("rm strategy.csv")
+command("python chopsticks.py")
 command("n")
 command("2 0 1 1")
 # command("clear")
