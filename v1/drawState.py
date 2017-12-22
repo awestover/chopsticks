@@ -1,4 +1,6 @@
+import psutil
+import sys
 import os
-print("State:\t" + str(state))
-os.system("taskkill /f /im Microsoft.Photos.exe")
+if len(sys.argv) == 1:
+    os.system("taskkill /f /im Microsoft.Photos.exe")
 os.startfile("arenaCurrent.png")

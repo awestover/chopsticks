@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw
 
 def updatePicture(state, mod=5):
+    print("State:\t" + str(state))
     im = Image.open("arena.png")
 
     w, h = im.size
@@ -11,11 +12,16 @@ def updatePicture(state, mod=5):
     fw = w*0.1
     fh = (h*0.8) / mod
 
+    draw = ImageDraw.Draw(im)
     for i in range(0, 2):
         for j in range(0, mod):
-            bbox =  (xs[i], ys + fh*j, fw, fh)
-            draw = ImageDraw.Draw(im)
-            draw.ellipse(bbox, fill=128)
-            del draw
+            if state[2*i + 0] > j and state[2*i + 1] > j:
+                bbox = (xs[i], ys + fh*j, fw, fh)
+                print(bbox)
+                draw.ellipse(bbox, fill=128)
+    del draw
 
     im.save("arenaCurrent.png")
+
+
+updatePicture([1,1,1,1])
