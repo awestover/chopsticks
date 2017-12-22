@@ -4,8 +4,8 @@ import os
 strategyFile = "strategyv1.csv"
 
 if not os.path.exists(strategyFile):
-    with open(strategyFile, "w") as f:
-        f.write("Previous,Next")
+    headDf = pd.DataFrame(columns=["Previous", "Next"])
+    headDf.to_csv(strategyFile, index=False)
 
 print("Let's begin")
 

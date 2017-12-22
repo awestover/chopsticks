@@ -216,17 +216,14 @@ def addLookupEntry(state1, state2):
     s2 = listToString(state2)
 
     stratCsv = pd.read_csv(strategyFile)
-
     nextStrat = {
         "Previous": s1,
         "Next": s2
     }
 
-    stratCsv.append(nextStrat)
-
+    stratCsv = stratCsv.append(nextStrat, ignore_index=True)
+    stratCsv.to_csv(strategyFile, index=False)
     print(stratCsv)
-    # csvF.writerow([listToString(state1), listToString(state2)]
-
 
 
 
