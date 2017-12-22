@@ -1,5 +1,4 @@
 from functions import *
-import pandas as pd
 import os
 
 strategyFile = "strategyv1.csv"

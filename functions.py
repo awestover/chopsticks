@@ -1,8 +1,13 @@
 # useful functions for the program
 
-import random
 from drawState import *
+import random
+import csv
+import pandas as pd
 import pdb
+
+# variables
+strategyFile = "strategyv1.csv"
 
 # doesn't care where the hands are
 # (ie 1343 and 3134 and 3143 and 1334 are considered)
@@ -151,6 +156,9 @@ def inputState(s, mod=5):
     while not validMove(state, nextMove):
         nextMove = parseState(input("input move values, space seperated\t"))
     drawState(nextMove)
+
+    addLookupEntry(state, nextMove)
+
     return invertState(nextMove)
 
 # generates a random state, not neccecarily valid
@@ -197,8 +205,27 @@ def gameOver(state):
     # may be nessecary.... later
 
 
+# turn a list into a string
+def listToString(l):
+    le = [str(e) for e in l]
+    return " ".join(le)
 
+# here is how to add to the table
+def addLookupEntry(state1, state2):
+    s1 = listToString(state1)
+    s2 = listToString(state2)
 
+    stratCsv = pd.read_csv(strategyFile)
+
+    nextStrat = {
+        "Previous": s1,
+        "Next": s2
+    }
+
+    stratCsv.append(nextStrat)
+
+    print(stratCsv)
+    # csvF.writerow([listToString(state1), listToString(state2)]
 
 
 
