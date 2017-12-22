@@ -63,7 +63,7 @@ def baseValidMove(lastState, nextState, mod=5):
 
     # no negative hands! (by convention)
     for i in range(0, 4):
-        if nextState[i] < 0:
+        if nextState[i] < 0 or nextState[i] >= mod:
             return False
 
     # nothing changed, not valid move
@@ -154,9 +154,7 @@ def inputState(s, mod=5):
     while not validMove(state, nextMove):
         nextMove = parseState(input("input move values, space seperated\t"))
     drawState(nextMove)
-
     addLookupEntry(state, nextMove)
-
     return invertState(nextMove)
 
 # generates a random state, not neccecarily valid
@@ -174,13 +172,12 @@ def stupidAdvanceState(state):
 # computer move
 def advanceState(state):
     lookUp = lookUpNextMove(state)
-    if lookUp != False:
+    if lookUp != []:
         return random.choice(lookUp)
     else:
         r = randomState()
         while gameOver(r) == 1 or not validMove(state, r):
             r = randomState()
-            drawState(r)
         return r
 
 
@@ -192,7 +189,6 @@ def lookUpNextMove(lastMove):
         if stratCsv["Previous"][i] == lastMove:
             nexts.append(stratCsv["Next"][i])
     return nexts
-
 
 # flips the reference frame
 def invertState(state):
