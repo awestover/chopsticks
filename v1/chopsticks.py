@@ -13,18 +13,19 @@ if not os.path.exists(strategyFile):
 print("Let's begin")
 
 state = [1, 1, 1, 1]
+updatePicture(state)
+drawState(first=True)
 turn = 0
 shift = random.randint(0, 1)  # who goes first?
 player = input("Would you like to play against me?\n\
-If not you can play against a human. (y/n)\t")
-if player == "y":
-    player = "computer"
-else:
+Yes-play against computer, No-play against human(y/n)\t")
+if "n" in player.lower():
     player = "human"
+else:
+    player = "computer"
 
 # game loop
 while gameOver(state) == -1:
-
     if (turn + shift) % 2 == 0:  # computer move
         if player == "computer":
             print("My turn")
@@ -41,6 +42,8 @@ while gameOver(state) == -1:
         # we must flip twice
         state = invertState(state)
     turn += 1
+    updatePicture(state)
+    drawState()
 
 print("Nice game")
 

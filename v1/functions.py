@@ -2,7 +2,6 @@
 
 import random
 import pandas as pd
-import pdb
 
 # variables
 strategyFile = "strategy.csv"
@@ -121,7 +120,6 @@ def randomState(mod=5):
 def advanceState(state):
     lookUp = lookUpNextMove(state)
     if lookUp != []:
-        pdb.set_trace()
         return parseState(random.choice(lookUp))
     else:
         r = randomState()
