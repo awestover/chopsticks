@@ -2,9 +2,7 @@
 
 from drawState import *
 import random
-import csv
 import pandas as pd
-import pdb
 
 # variables
 strategyFile = "strategyv1.csv"
@@ -175,11 +173,26 @@ def stupidAdvanceState(state):
 
 # computer move
 def advanceState(state):
-    r = randomState()
-    while gameOver(r) == 1 or not validMove(state, r):
+    lookUp = lookUpNextMove(state)
+    if lookUp != False:
+        return random.choice(lookUp)
+    else:
         r = randomState()
-        drawState(r)
-    return r
+        while gameOver(r) == 1 or not validMove(state, r):
+            r = randomState()
+            drawState(r)
+        return r
+
+
+# looks up a move in the table, returns all recorder next moves
+def lookUpNextMove(lastMove):
+    stratCsv = pd.read_csv(strategyFile)
+    nexts = []
+    for i in range(0, len(stratCsv["Previous"])):
+        if stratCsv["Previous"][i] == lastMove:
+            nexts.append(stratCsv["Next"][i])
+    return nexts
+
 
 # flips the reference frame
 def invertState(state):
@@ -222,8 +235,8 @@ def addLookupEntry(state1, state2):
     }
 
     stratCsv = stratCsv.append(nextStrat, ignore_index=True)
+    stratCsv = stratCsv[["Previous", "Next"]]
     stratCsv.to_csv(strategyFile, index=False)
-    print(stratCsv)
 
 
 
