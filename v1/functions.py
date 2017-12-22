@@ -87,6 +87,10 @@ def permHands(state):
         out.append(cur)
     return out
 
+# checks if 2 states are identical
+def sameState(state1, state2):
+    return state2 in permHands(state1)
+
 # turns a string of numbers with no spaces in between them to a list of integers
 def parseNoSpaceString(s):
     s = list(s)
@@ -133,7 +137,8 @@ def lookUpNextMove(lastMove):
     stratCsv = pd.read_csv(strategyFile)
     nexts = []
     for i in range(0, len(stratCsv["Previous"])):
-        if stratCsv["Previous"][i] == listToString(lastMove):
+        # real eqaulity check
+        if sameState(stratCsv["Previous"][i], listToString(lastMove)):
             nexts.append(stratCsv["Next"][i])
     return nexts
 
@@ -180,7 +185,3 @@ def addLookupEntry(state1, state2):
     stratCsv = stratCsv.append(nextStrat, ignore_index=True)
     stratCsv = stratCsv[["Previous", "Next"]]
     stratCsv.to_csv(strategyFile, index=False)
-
-
-
-#_____
