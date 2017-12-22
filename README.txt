@@ -19,3 +19,11 @@ Conventions:
 A state is an array with
 state = [ player_hand1, player_hand2, enemy_hand1, enemy_hand2 ]
 Note different players will observe this differently
+
+
+
+It would be nice if we had a representation of states that did not have an "order" to it
+1 1 2 0 is identical to 1 1 0 2
+but it is hard to see this as it stands
+
+- first just build a function that checks equality not by == but non discriminant like this

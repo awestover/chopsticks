@@ -71,6 +71,10 @@ def baseValidMove(lastState, nextState, mod=5):
     if lastState == nextState:
         return False
 
+    # you can only hit one hand...
+    if nextState[3] != lastState[3] and nextState[2] != lastState[2]:
+        return False
+
     return True # submit for more evaluation
 
 # all reorderings of a hand
