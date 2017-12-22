@@ -1,4 +1,7 @@
+from updatePicture import updatePicture
+from drawState import drawState
 from functions import *
+import sys
 import os
 
 strategyFile = "strategy.csv"
@@ -8,7 +11,6 @@ if not os.path.exists(strategyFile):
     headDf.to_csv(strategyFile, index=False)
 
 print("Let's begin")
-
 
 state = [1, 1, 1, 1]
 turn = 0
@@ -22,6 +24,7 @@ else:
 
 # game loop
 while gameOver(state) == -1:
+
     if (turn + shift) % 2 == 0:  # computer move
         if player == "computer":
             print("My turn")

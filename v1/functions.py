@@ -1,6 +1,5 @@
 # useful functions for the program
 
-from drawState import *
 import random
 import pandas as pd
 import pdb
@@ -108,11 +107,9 @@ def parseState(state):
 # note must invert state when reading in and writing out for the computer
 # but this is done elsewhere
 def inputState(state, mod=5):
-    drawState(state)
     nextMove = [-1, -1, -1, -1]
     while not validMove(state, nextMove):
         nextMove = parseState(input("input move values, space seperated\t"))
-    drawState(nextMove)
     addLookupEntry(state, nextMove)
     return nextMove
 

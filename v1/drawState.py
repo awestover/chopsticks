@@ -1,9 +1,4 @@
-import pygame
-
-def drawState(state, mod=5):
-    print("DRAW: state\t" + str(state))
-
-
-# all you Max
-def drawStateReal(state, mod=5):
-    print(state)
+import os
+print("State:\t" + str(state))
+os.system("taskkill /f /im Microsoft.Photos.exe")
+os.startfile("arenaCurrent.png")
