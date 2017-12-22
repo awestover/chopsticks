@@ -1,6 +1,7 @@
 from updatePicture import updatePicture
 from drawState import drawState
 from functions import *
+import time
 import sys
 import os
 
@@ -29,7 +30,9 @@ while gameOver(state) == -1:
     if (turn + shift) % 2 == 0:  # computer move
         if player == "computer":
             print("My turn")
+            time.sleep(0.5)
             state = advanceState(state)
+            time.sleep(1)
         else:
             print("Player turn")
             state = inputState(state)
