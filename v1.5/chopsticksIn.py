@@ -1,11 +1,8 @@
-#!/usr/bin/env python3
-
+# speech input from user
 import speech_recognition as sr
 
-
-numbers = "zero one two three four five six seven eight nine".split(" ")
-
 def getIn():
+    numbers = "zero one two three four five six seven eight nine".split(" ")
     # get audio from the microphone
     r = sr.Recognizer()
     res = []
@@ -74,8 +71,7 @@ def inputPrompt():
     print("2. say hand [hits] hand to have that happen")
     print("3. say [change to] and then the new 4 hands")
 
-
-print("1")
-parseGetIn([1,1,1,1])
-print("2")
-parseGetIn([2,2,2,3])
+# print("1")
+# parseGetIn([1,1,1,1])
+# print("2")
+# parseGetIn([2,2,2,3])

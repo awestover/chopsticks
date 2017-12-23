@@ -25,6 +25,12 @@ if "n" in player.lower():
 else:
     player = "computer"
 
+mic = True
+micAns = input("Would you like to use the microphone for your speech input?(y/n)")
+if len(micAns) > 0:
+    if micAns[0].lower() == 'n'
+        mic = False
+        
 # game loop
 while gameOver(state) == -1:
     if (turn + shift) % 2 == 0:  # computer move
@@ -42,7 +48,7 @@ while gameOver(state) == -1:
         # note the state assumes the current player is listed first
         state = invertState(state)
         # make the choice
-        state = inputState(state)
+        state = inputState(state, mic=mic)
         # we must flip twice
         state = invertState(state)
     turn += 1
@@ -51,6 +57,3 @@ while gameOver(state) == -1:
     sayState(state)
 
 print("Nice game")
-
-
-#___
