@@ -1,4 +1,5 @@
 Specific problems:
 
 Better nextMove function?
-drawHands function?
+validMove is flawed, fix it the next time you notice
+
