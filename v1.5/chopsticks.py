@@ -28,9 +28,9 @@ else:
 mic = True
 micAns = input("Would you like to use the microphone for your speech input?(y/n)")
 if len(micAns) > 0:
-    if micAns[0].lower() == 'n'
+    if micAns[0].lower() == 'n':
         mic = False
-        
+
 # game loop
 while gameOver(state) == -1:
     if (turn + shift) % 2 == 0:  # computer move

@@ -43,12 +43,10 @@ def getIn():
 
     print(res)
 
-def validMove(statel, statef):
-    return statef != [-1,-1,-1,-1]
 
 def parseGetIn(state, mod=5):
     res = [[-1, -1, -1, -1], "na"]
-    while not validMove(state, res[0]):
+    while res[0] == [-1, -1, -1, -1]:
         inputPrompt()
         res = getIn()
         print("CHECKING")
@@ -57,7 +55,7 @@ def parseGetIn(state, mod=5):
                 for j in range(2, 4):
                     if res[0][0] == state[i]:
                         if res[0][1] == state[j]:
-                            res[0] = state
+                            res[0] = state[:]
                             res[0][j] = (state[i] + state[j]) % mod
         elif res[1] == "switch":
             res[0] = [res[0][0], res[0][1], state[2], state[3]]

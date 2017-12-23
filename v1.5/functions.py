@@ -28,6 +28,8 @@ def inputState(state, mod=5, mic=True):
     nextMove = [-1, -1, -1, -1]
     while not validMove(state, nextMove):
         if mic:
+            print("-"*1000)
+            print(nextMove, state)
             nextMove = parseGetIn(state, mod)
         else:
             nextMove = parseState(input("input move values, space seperated\t"))
