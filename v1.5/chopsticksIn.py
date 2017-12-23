@@ -26,7 +26,7 @@ def getIn():
                     if len(res) == 2:
                         if "hit" in out:
                             return [res, "hit"]
-                        elif "switch" in out:
+                        elif "switch" in out or "split" in out:
                             return [res, "switch"]
 
                     elif len(res) == 4:
