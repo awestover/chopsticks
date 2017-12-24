@@ -1,8 +1,10 @@
 This is a project where we attempt to make a cool chopsticks player
 
 Outline:
+v0 - most basic possible player playing against palyer or computer
 v1 - basic player strategy copying
 v1.5 - v1 with i/o from voice and microphone
+v1.7 - cross platform v1.5
 v2 - genetic strategy updating
 
 v3 - v1.5 with mod n
