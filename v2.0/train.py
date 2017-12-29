@@ -6,6 +6,12 @@ MATCHES_PER_GENERATION = 2
 
 MUTATE_RATE = 0.2
 
+POINTS = {
+    "win": 1,
+    "tie": 0.2,
+    "loss": -0.5
+}
+
 POPULATION_INITIAL =
 {
     "random": 10
@@ -252,10 +258,20 @@ for generation in range (0, NUM_GENERATIONS):
             while match == brain:
                 match = random.randint(0, POPULATION_SIZE)
             result = playMatch(brains[brain], brains[match])
-
             # UPDATE SCORE
+            if result == 1:
+                scores[match] += POINTS["loss"]
+                scores[brain] += POINTS["win"]
+            elif result == 2:
+                scores[match] += POINTS["win"]
+                scores[brain] += POINTS["loss"]
+            elif result == 0: # tie
+                scores[match] += POINTS["tie"]
+                scores[brain] += POINTS["tie"]
+            # no other possibilities, the game can't end with -1 gameOver
 
     brains = nextGen(brains)
+    scores = [0 for i in range(0, POPULATION_SIZE)]
 
 bestStrategy = brains[0]
 

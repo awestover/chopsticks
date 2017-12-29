@@ -15,11 +15,14 @@ v2.2 - recursion delver
 v2.3 - genetic facing recursion delver
 v2.4 - my own speech 
 v2.5 - my own speech recognition
+v2.6 - explore hyperparameters for genetic with grid search or something
 
 v3.0 - mod n
+
 v4.0 - genetic mod n
 
 v5.0 - suicide option
+
 v6.0 - preservation option
 
 v7.0 - pip installable program with basic features and a good AI
