@@ -1,6 +1,8 @@
 # initially random AIs evolve over time
 # clean and comment in a later verision
 
+import random
+
 POPULATION_SIZE = 10
 MATCHES_PER_GENERATION = 2
 
@@ -143,8 +145,8 @@ def randomState(mod=5):
     return [random.randint(0, mod - 1) for i in range(0, 4)]
 
 # computer move
-def advanceState(state):
-    lookUp = lookUpNextMove(state)
+def advanceState(state, brain):
+    lookUp = lookUpNextMove(state, brain)
     if lookUp != []:
         return parseState(random.choice(lookUp))
     else:
@@ -186,11 +188,11 @@ def playMatch(brain0, brain1):
     state = [1, 1, 1, 1]
     while gameOver(state, depth=turn) == -1:
         if (turn + shift) % 2 == 0:  # brain0
-            state = advanceState(state)
+            state = advanceState(state, brain0)
         else: # brain1
             state = invertState(state)
             # make the choice
-            state =  advanceState(state)
+            state =  advanceState(state, brain1)
             # we must flip twice
             state = invertState(state)
         turn += 1
