@@ -1,6 +1,6 @@
 # initially random AIs evolve over time
 # clean and comment in a later verision
-
+import pdb
 import random
 
 POPULATION_SIZE = 10
@@ -230,7 +230,7 @@ def nextGen(brains, scores):
 def mutate(brain):
     # lose some of your strategy, it will be randomly replaced on a as needed basis
     mutated = {"Previous": [], "Nexts": []}
-    for b in range(0, POPULATION_SIZE):
+    for b in range(0, len(brain["Previous"])):
         if random.random() > MUTATE_RATE:  #not a mutation
             mutated["Previous"].append(brain["Previous"][b])
             mutated["Nexts"].append(brain["Nexts"][b])
@@ -255,7 +255,7 @@ NUM_GENERATIONS = 10
 for generation in range (0, NUM_GENERATIONS):
     for brain in range(0, POPULATION_SIZE):
         for matches in range(0, MATCHES_PER_GENERATION):
-            match = random.randint(0, POPULATION_SIZE)
+            match = brain  # initialize to fail case just cause
             while match == brain:
                 match = random.randint(0, POPULATION_SIZE - 1)
             result = playMatch(brains[brain], brains[match])
