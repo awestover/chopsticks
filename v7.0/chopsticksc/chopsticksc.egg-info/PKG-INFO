@@ -1,0 +1,15 @@
+Metadata-Version: 1.0
+Name: chopsticksc
+Version: 1.0.4
+Summary: A chopsticks playing computer
+Home-page: https://github.com/AWestover/chopsticks
+Author: Alek Westover
+Author-email: alek.westover@gmail.com
+License: UNKNOWN
+Description: The chopsticks game
+        You hit the opponents hand
+        until it is 0 (mod 5)
+        you can also split your own hand
+        
+Keywords: chopsticks game AI
+Platform: UNKNOWN
