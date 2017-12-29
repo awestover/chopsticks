@@ -18,9 +18,9 @@ import pandas as pd
 import random
 
 # these hyperparameters could stand to be tuned
-POPULATION_SIZE = 50
-MATCHES_PER_GENERATION = 10
-NUM_GENERATIONS = 100
+POPULATION_SIZE = 25
+MATCHES_PER_GENERATION = 5
+NUM_GENERATIONS = 1000
 
 MUTATE_RATE = 0.3
 
@@ -33,13 +33,13 @@ POINTS = {
 POPULATION_INITIAL = {
     "survived": 0,
     "mutated": 0,
-    "random": 50
+    "random": 25
 }
 
 POPULATION = {
-    "survived": 10,
-    "mutated": 10,
-    "random": 30
+    "survived": 5,
+    "mutated": 5,
+    "random": 15
 }
 
 
@@ -269,6 +269,7 @@ def bestBrain(brains, scores):
 
 # the learning loop
 for generation in range (0, NUM_GENERATIONS):
+    print("Generation " + str(generation))
     if generation == 0:
         brains = nextGen(None, None, POPULATION_INITIAL)
     else:
