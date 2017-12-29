@@ -17,6 +17,7 @@ later add more categories like inheriting brain initialization from humans later
 import pdb
 import random
 
+# these hyperparameters could stand to be tuned
 POPULATION_SIZE = 10
 MATCHES_PER_GENERATION = 2
 
@@ -191,15 +192,26 @@ def playMatch(brain0, brain1):
     state = [1, 1, 1, 1]
     while gameOver(state, depth=turn) == -1:
         if (turn + shift) % 2 == 0:  # brain0
+            prevState = state[:]
             state = advanceState(state, brain0)
+            brain0 = addEntry(brain0, prevState, state)
         else: # brain1
             state = invertState(state)
+            # copy the old state
+            prevState = state[:]
             # make the choice
             state =  advanceState(state, brain1)
+            brain1 = addEntry(brain1, prevState, state)
             # we must flip twice
             state = invertState(state)
         turn += 1
-    return gameOver(state, depth=turn)
+    return gameOver(state, depth=turn), brain0, brain1
+
+# add an entry to the look up table
+def addEntry(brain, prevState, state):
+    brain["Previous"].append(prevState)
+    brain["Nexts"].append(state)
+    return brain
 
 # get the next generation from the last  generation
 def nextGen(brains, scores, population_makeup):
@@ -267,7 +279,10 @@ for generation in range (0, NUM_GENERATIONS):
             match = brain  # initialize to fail case just cause
             while match == brain:
                 match = random.randint(0, POPULATION_SIZE - 1)
-            result = playMatch(brains[brain], brains[match])
+            res = playMatch(brains[brain], brains[match])
+            brains[brain] = res[1]
+            brains[match] = res[2]
+            result = res[0]
             # UPDATE SCORE
             if result == 1:
                 scores[match] += POINTS["loss"]
