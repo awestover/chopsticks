@@ -134,7 +134,8 @@ def advanceState(state):
 
 # looks up a move in the table, returns all recorder next moves
 def lookUpNextMove(lastMove):
-    strategyFile = "strategy.csv"
+    # iffy path finding 
+    strategyFile = os.path.dirname(__file__) + "strategy.csv"
     try:
         stratCsv = pd.read_csv(strategyFile)
     except:
