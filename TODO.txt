@@ -1,5 +1,0 @@
-Specific problems:
-
-Better nextMove function?
-validMove is flawed, fix it the next time you notice
-

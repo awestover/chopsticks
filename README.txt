@@ -1,19 +1,29 @@
 This is a project where we attempt to make a cool chopsticks player
 
 Outline:
-v0 - most basic possible player playing against palyer or computer
-v1 - basic player strategy copying
-v1.5 - v1 with i/o from voice and microphone
-v1.8 - cross platform speech, no pictures though
-v2 - genetic strategy updating
 
-v3 - v1.5 with mod n
-v4 - genetic mod n
+v0.0 - most basic possible player playing against palyer or computer
 
-v5 - suicide option
-v6 - preservation option
+v1.0 - basic player strategy copying
+v1.1 - i/o from voice and microphone
+v1.2 - broken
+v1.3 - cross platform speech, small probelm getting appropriate version of speech on Linux
 
-v7 - online option (Django/Flask)
+v2.0 - genetic strategy updating (no graphics or audio)
+v2.1 - genetic seeded with human data
+v2.2 - recursion delver
+v2.3 - genetic facing recursion delver
+v2.4 - my own speech 
+v2.5 - my own speech recognition
+
+v3.0 - mod n
+v4.0 - genetic mod n
+
+v5.0 - suicide option
+v6.0 - preservation option
+
+v7.0 - pip installable program with basic features and a good AI
+v7.1 - pip installable with ALL features
 
 Conventions:
 
@@ -29,3 +39,12 @@ It would be nice if we had a representation of states that did not have an "orde
 but it is hard to see this as it stands
 
 - first just build a function that checks equality not by == but non discriminant like this
+
+
+Specific problems:
+
+Better nextMove function
+validMove is flawed, fix it the next time you notice
+Add my speech recognition and cooler speaking with NNs
+better strategy
+

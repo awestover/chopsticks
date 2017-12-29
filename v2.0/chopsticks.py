@@ -10,22 +10,9 @@ if not os.path.exists(strategyFile):
     headDf.to_csv(strategyFile, index=False)
 
 state = [1, 1, 1, 1]
-updatePicture(state)
-drawState(first=True)
 turn = 0
 shift = random.randint(0, 1)  # who goes first?
-player = input("Would you like to play against me?\n\
-Yes-play against computer, No-play against human(y/n)\t")
-if "n" in player.lower():
-    player = "human"
-else:
-    player = "computer"
 
-mic = True
-micAns = input("Would you like to use the microphone for your speech input?(y/n)")
-if len(micAns) > 0:
-    if micAns[0].lower() == 'n':
-        mic = False
 
 # game loop
 while gameOver(state) == -1:
