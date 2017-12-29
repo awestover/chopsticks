@@ -135,13 +135,8 @@ def advanceState(state):
 # looks up a move in the table, returns all recorder next moves
 def lookUpNextMove(lastMove):
     # iffy path finding
-    strategyFile = os.path.dirname(__file__) + "\\strategy.csv"
-    try:
-        stratCsv = pd.read_csv(strategyFile)
-    except:
-        print(os.getcwd())
-        import pdb
-        pdb.set_trace()
+    strategyFile = os.path.join(os.path.dirname(__file__), "strategy.csv")
+    stratCsv = pd.read_csv(strategyFile)
     nexts = []
     for i in range(0, len(stratCsv["Previous"])):
         # real eqaulity check
@@ -171,27 +166,7 @@ def listToString(l):
     le = [str(e) for e in l]
     return " ".join(le)
 
-# # here is how to add to the table
-# def addLookupEntry(state1, state2):
-#     s1 = listToString(state1)
-#     s2 = listToString(state2)
-#
-#     stratCsv = pd.read_csv(strategyFile)
-#     nextStrat = {
-#         "Previous": s1,
-#         "Next": s2
-#     }
-#
-#     stratCsv = stratCsv.append(nextStrat, ignore_index=True)
-#     stratCsv = stratCsv[["Previous", "Next"]]
-#     stratCsv.to_csv(strategyFile, index=False)
-
-
-# if not os.path.exists(strategyFile):
-#     headDf = pd.DataFrame(columns=["Previous", "Next"])
-#     headDf.to_csv(strategyFile, index=False)
-
-
+# the game loop
 def main():
     print("Let's begin")
 
