@@ -218,7 +218,7 @@ def nextGen(brains, scores, population_makeup):
         topIndices.append(achieved)
 
     for ti in topIndices:
-        nextBrains.append(ti)
+        nextBrains.append(brains[ti])
 
     cycle = 0
     for j in range(0, population_makeup["mutated"]):
@@ -226,7 +226,7 @@ def nextGen(brains, scores, population_makeup):
         cycle = (cycle + 1) % population_makeup["survived"]
 
     for k in range(0, population_makeup["random"]):
-        nextBrains.append({"Previous":[], "Nexts":[]})
+        nextBrains.append( {"Previous":[], "Nexts":[]} )
 
     return nextBrains
 
@@ -258,7 +258,7 @@ NUM_GENERATIONS = 10
 
 for generation in range (0, NUM_GENERATIONS):
     if generation == 0:
-        brains = nextGen(brains, scores, POPULATION_INITIAL)
+        brains = nextGen(None, None, POPULATION_INITIAL)
     else:
         brains = nextGen(brains, scores, POPULATION)
     scores = [0 for i in range(0, POPULATION_SIZE)]
@@ -267,10 +267,7 @@ for generation in range (0, NUM_GENERATIONS):
             match = brain  # initialize to fail case just cause
             while match == brain:
                 match = random.randint(0, POPULATION_SIZE - 1)
-            try:
-                result = playMatch(brains[brain], brains[match])
-            except:
-                pdb.set_trace()
+            result = playMatch(brains[brain], brains[match])
             # UPDATE SCORE
             if result == 1:
                 scores[match] += POINTS["loss"]
@@ -284,6 +281,7 @@ for generation in range (0, NUM_GENERATIONS):
             # no other possibilities, the game can't end with -1 gameOver
 
 
+# this is not correct, we want the best brain, fix later
 bestStrategy = brains[0]
 
 prevs = []
