@@ -1,7 +1,10 @@
 # initially random AIs evolve over time
+# clean and comment in a later verision
 
 POPULATION_SIZE = 10
 MATCHES_PER_GENERATION = 2
+
+MUTATE_RATE = 0.2
 
 POPULATION_INITIAL =
 {
@@ -19,11 +22,11 @@ POPULATION =
 # brain stucture is as follows
 """
 brains = [ Look up tables for all of the computers that will be competing  ]
-brains[i] = {"previous":[previous states], "nexts":[next states] }
+brains[i] = {"Previous":[Previous], "Nexts":[Nexts] }
 """
 brains = []
 for i in range(0, POPULATION_INITIAL["random"]):
-    brains.append( {"previous states":[], "next states":[]} )
+    brains.append( {"Previous":[], "Nexts":[]} )
 # you could add more categories, like inheriting brain initialization from humans
 
 # this determines which brains should survive
@@ -148,11 +151,11 @@ def advanceState(state):
 
 # looks up a move in the table, returns all recorder next moves
 def lookUpNextMove(lastMove, brain):
-    nexts = []
-    for i in range(0, len(stratCsv["Previous"])):
+    nexts = [] # this should really only have 1 or zero entries, fix this waste later...
+    for i in range(0, len(brain["Previous"])):
         # real eqaulity check
-        if sameState(stratCsv["Previous"][i], listToString(lastMove)):
-            nexts.append(stratCsv["Next"][i])
+        if sameState(listToString(brain["Previous"][i]), listToString(lastMove)):
+            nexts.append(brain["Next"][i])
     return nexts
 
 # flips the reference frame
@@ -172,15 +175,59 @@ def gameOver(state, depth=0):
     else:
         return -1
 
-
 # simulate a match between brains 1 and 2 and submit the result
-def playMatch(brain1, brain2):
-
+def playMatch(brain0, brain1):
+    turn = 0
+    shift = random.randint(0, 1)  # who goes first?
+    state = [1, 1, 1, 1]
+    while gameOver(state, depth=turn) == -1:
+        if (turn + shift) % 2 == 0:  # brain0
+            state = advanceState(state)
+        else: # brain1
+            state = invertState(state)
+            # make the choice
+            state =  advanceState(state)
+            # we must flip twice
+            state = invertState(state)
+        turn += 1
+    return gameOver(state, depth=turn)
 
 # get the next generation from the last  generation
-def nextGen(brains):
+def nextGen(brains, scores):
     nextBrains = []
 
+    # get some good ones
+    topIndices = []
+    while len(topIndices) < POPULATION["survived"]:
+        nextBest = min(scores)
+        achieved = -1
+        for idx in range(0, len(brains)):
+            if scores[idx] >= nextBest:
+                if idx not in topIndices:
+                    achieved = idx
+                    nextBest = scores[idx]
+        topIndices.append(achieved)
+
+    for ti in topIndices:
+        nextBrains.append(ti)
+
+    cycle = 0
+    for j in range(0, POPULATION["mutated"]):
+        nextBrains.append(mutate(brains[topIndices[cycle]]))
+        cycle = (cycle + 1) % POPULATION["survived"]
+
+    for k in range(0, POPULATION["random"]):
+        nextBrains.append({"Previous":[], "Nexts":[]})
+
+    return nextBrains
+
+def mutate(brain):
+    # lose some of your strategy, it will be randomly replaced on a as needed basis
+    mutated = []
+    for b in brain():
+        if random.random() > MUTATE_RATE:
+            mutated.append(b)
+    return mutated
 
 def writeStrategy(strategy):
     s1 = listToString(state1)
@@ -204,7 +251,10 @@ for generation in range (0, NUM_GENERATIONS):
             match = random.randint(0, POPULATION_SIZE)
             while match == brain:
                 match = random.randint(0, POPULATION_SIZE)
-            brains = playMatch(brains, brain, match)
+            result = playMatch(brains[brain], brains[match])
+
+            # UPDATE SCORE
+
     brains = nextGen(brains)
 
 bestStrategy = brains[0]
