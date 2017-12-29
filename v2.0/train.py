@@ -252,11 +252,11 @@ def writeStrategy(strategy):
 NUM_GENERATIONS = 10
 
 for generation in range (0, NUM_GENERATIONS):
-    for brain in range(0, len(brains)):
+    for brain in range(0, POPULATION_SIZE):
         for matches in range(0, MATCHES_PER_GENERATION):
             match = random.randint(0, POPULATION_SIZE)
             while match == brain:
-                match = random.randint(0, POPULATION_SIZE)
+                match = random.randint(0, POPULATION_SIZE - 1)
             result = playMatch(brains[brain], brains[match])
             # UPDATE SCORE
             if result == 1:
@@ -270,7 +270,7 @@ for generation in range (0, NUM_GENERATIONS):
                 scores[brain] += POINTS["tie"]
             # no other possibilities, the game can't end with -1 gameOver
 
-    brains = nextGen(brains)
+    brains = nextGen(brains, scores)
     scores = [0 for i in range(0, POPULATION_SIZE)]
 
 bestStrategy = brains[0]
