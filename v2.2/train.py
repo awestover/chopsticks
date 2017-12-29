@@ -18,11 +18,11 @@ import pandas as pd
 import random
 
 # these hyperparameters could stand to be tuned
-POPULATION_SIZE = 50
-MATCHES_PER_GENERATION = 10
-NUM_GENERATIONS = 100
+POPULATION_SIZE = 10
+MATCHES_PER_GENERATION = 2
+NUM_GENERATIONS = 10
 
-MUTATE_RATE = 0.3
+MUTATE_RATE = 0.2
 
 POINTS = {
     "win": 1,
@@ -33,13 +33,13 @@ POINTS = {
 POPULATION_INITIAL = {
     "survived": 0,
     "mutated": 0,
-    "random": 50
+    "random": 10
 }
 
 POPULATION = {
-    "survived": 10,
-    "mutated": 10,
-    "random": 30
+    "survived": 2,
+    "mutated": 2,
+    "random": 6
 }
 
 
