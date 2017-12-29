@@ -1,5 +1,19 @@
-# initially random AIs evolve over time
-# clean and comment in a later verision
+"""
+initially random AIs evolve over time
+clean and comment in a later verision
+Notes:
+scores is the array that determines who shall live and who shall die
+it is just a point value (reset every generation) indicating how good you are
+
+brains is the list of look up tables for each competitor
+brains = [ Look up tables for all of the computers that will be competing  ]
+brains[i] = {"Previous":[Previous], "Nexts":[Nexts] }
+
+population dictionaries specify the makeup of a population
+later add more categories like inheriting brain initialization from humans later
+
+"""
+
 import pdb
 import random
 
@@ -15,6 +29,8 @@ POINTS = {
 }
 
 POPULATION_INITIAL = {
+    "survived": 0,
+    "mutated": 0,
     "random": 10
 }
 
@@ -24,19 +40,6 @@ POPULATION = {
     "random": 6
 }
 
-# random initialization
-# brain stucture is as follows
-"""
-brains = [ Look up tables for all of the computers that will be competing  ]
-brains[i] = {"Previous":[Previous], "Nexts":[Nexts] }
-"""
-brains = []
-for i in range(0, POPULATION_INITIAL["random"]):
-    brains.append( {"Previous":[], "Nexts":[]} )
-# you could add more categories, like inheriting brain initialization from humans
-
-# this determines which brains should survive
-scores = [0 for i in range(0, POPULATION_SIZE)]
 
 # turn a list into a string
 def listToString(l):
@@ -199,12 +202,12 @@ def playMatch(brain0, brain1):
     return gameOver(state, depth=turn)
 
 # get the next generation from the last  generation
-def nextGen(brains, scores):
+def nextGen(brains, scores, population_makeup):
     nextBrains = []
 
     # get some good ones
     topIndices = []
-    while len(topIndices) < POPULATION["survived"]:
+    while len(topIndices) < population_makeup["survived"]:
         nextBest = min(scores)
         achieved = -1
         for idx in range(0, len(brains)):
@@ -218,11 +221,11 @@ def nextGen(brains, scores):
         nextBrains.append(ti)
 
     cycle = 0
-    for j in range(0, POPULATION["mutated"]):
+    for j in range(0, population_makeup["mutated"]):
         nextBrains.append(mutate(brains[topIndices[cycle]]))
-        cycle = (cycle + 1) % POPULATION["survived"]
+        cycle = (cycle + 1) % population_makeup["survived"]
 
-    for k in range(0, POPULATION["random"]):
+    for k in range(0, population_makeup["random"]):
         nextBrains.append({"Previous":[], "Nexts":[]})
 
     return nextBrains
@@ -236,6 +239,7 @@ def mutate(brain):
             mutated["Nexts"].append(brain["Nexts"][b])
     return mutated
 
+# outputs the final strategy brain to a csv for use against human opponents or something
 def writeStrategy(strategy):
     s1 = listToString(state1)
     s2 = listToString(state2)
@@ -253,12 +257,20 @@ def writeStrategy(strategy):
 NUM_GENERATIONS = 10
 
 for generation in range (0, NUM_GENERATIONS):
+    if generation == 0:
+        brains = nextGen(brains, scores, POPULATION_INITIAL)
+    else:
+        brains = nextGen(brains, scores, POPULATION)
+    scores = [0 for i in range(0, POPULATION_SIZE)]
     for brain in range(0, POPULATION_SIZE):
         for matches in range(0, MATCHES_PER_GENERATION):
             match = brain  # initialize to fail case just cause
             while match == brain:
                 match = random.randint(0, POPULATION_SIZE - 1)
-            result = playMatch(brains[brain], brains[match])
+            try:
+                result = playMatch(brains[brain], brains[match])
+            except:
+                pdb.set_trace()
             # UPDATE SCORE
             if result == 1:
                 scores[match] += POINTS["loss"]
@@ -271,8 +283,6 @@ for generation in range (0, NUM_GENERATIONS):
                 scores[brain] += POINTS["tie"]
             # no other possibilities, the game can't end with -1 gameOver
 
-    brains = nextGen(brains, scores)
-    scores = [0 for i in range(0, POPULATION_SIZE)]
 
 bestStrategy = brains[0]
 
