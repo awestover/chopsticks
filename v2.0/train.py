@@ -14,12 +14,13 @@ later add more categories like inheriting brain initialization from humans later
 
 """
 
-import pdb
+import pandas as pd
 import random
 
 # these hyperparameters could stand to be tuned
 POPULATION_SIZE = 10
 MATCHES_PER_GENERATION = 2
+NUM_GENERATIONS = 10
 
 MUTATE_RATE = 0.2
 
@@ -242,6 +243,7 @@ def nextGen(brains, scores, population_makeup):
 
     return nextBrains
 
+# mutate a strategy
 def mutate(brain):
     # lose some of your strategy, it will be randomly replaced on a as needed basis
     mutated = {"Previous": [], "Next": []}
@@ -253,6 +255,7 @@ def mutate(brain):
 
 # outputs the final strategy brain to a csv for use against human opponents or something
 def writeStrategy(strategy):
+    strategyFile = "strategy.csv"
     for s in range(0, len(strategy["Previous"])):
         strategy["Previous"][s] = listToString(strategy["Previous"][s])
         strategy["Next"][s] = listToString(strategy["Next"][s])
@@ -260,9 +263,11 @@ def writeStrategy(strategy):
     stratCsv = stratCsv[["Previous", "Next"]]
     stratCsv.to_csv(strategyFile, index=False)
 
+# which brain is the best
+def bestBrain(brains, scores):
+    return brains[scores.index(max(scores))]
 
-NUM_GENERATIONS = 10
-
+# the learning loop
 for generation in range (0, NUM_GENERATIONS):
     if generation == 0:
         brains = nextGen(None, None, POPULATION_INITIAL)
@@ -292,20 +297,5 @@ for generation in range (0, NUM_GENERATIONS):
 
 
 # this is not correct, we want the best brain, fix later
-bestStrategy = brains[0]
-
-prevs = []
-nexts = []
-for s in bestStrategy:
-    prevs.append(listToString(s[0]))
-    nexts.append(listToString(s[1]))
-
-import pandas as pd
-import os
-strategyFile = "strategy.csv"
-strat = {
-    "Previous": prevs,
-    "Next": nexts
-}
-df = pd.DataFrame(strat)
-df.to_csv(strategyFile, index=False)
+bestStrategy = bestBrain(brains, scores)
+writeStrategy(bestStrategy)
