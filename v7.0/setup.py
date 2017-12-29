@@ -142,7 +142,7 @@ setup(
     # If using Python 2.6 or earlier, then these have to be included in
     # MANIFEST.in as well.
     package_data={  # Optional
-        'strategy': ['strategy.csv'],
+        'chopsticksc': ['strategy.csv'],
     },
 
     # Although 'package_data' is the preferred approach, in some case you may
@@ -159,9 +159,9 @@ setup(
     #
     # For example, the following would provide a command called `sample` which
     # executes the function `main` from this package when invoked:
-    entry_points={  # Optional
-        'console_scripts': [
-            'sample=sample:main',
-        ],
-    },
+    # entry_points={  # Optional
+    #     'console_scripts': [
+    #         'sample=sample:main',
+    #     ],
+    # },
 )
