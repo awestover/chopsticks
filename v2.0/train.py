@@ -229,10 +229,11 @@ def nextGen(brains, scores):
 
 def mutate(brain):
     # lose some of your strategy, it will be randomly replaced on a as needed basis
-    mutated = []
-    for b in brain():
-        if random.random() > MUTATE_RATE:
-            mutated.append(b)
+    mutated = {"Previous": [], "Nexts": []}
+    for b in range(0, POPULATION_SIZE):
+        if random.random() > MUTATE_RATE:  #not a mutation
+            mutated["Previous"].append(brain["Previous"][b])
+            mutated["Nexts"].append(brain["Nexts"][b])
     return mutated
 
 def writeStrategy(strategy):
