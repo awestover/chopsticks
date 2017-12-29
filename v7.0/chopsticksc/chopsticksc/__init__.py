@@ -135,7 +135,12 @@ def advanceState(state):
 # looks up a move in the table, returns all recorder next moves
 def lookUpNextMove(lastMove):
     strategyFile = "strategy.csv"
-    stratCsv = pd.read_csv(strategyFile)
+    try:
+        stratCsv = pd.read_csv(strategyFile)
+    except:
+        print(os.getcwd())
+        import pdb
+        pdb.set_trace()
     nexts = []
     for i in range(0, len(stratCsv["Previous"])):
         # real eqaulity check
