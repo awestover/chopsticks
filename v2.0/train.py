@@ -12,15 +12,13 @@ POINTS = {
     "loss": -0.5
 }
 
-POPULATION_INITIAL =
-{
+POPULATION_INITIAL = {
     "random": 10
 }
 
-POPULATION =
-{
+POPULATION = {
     "survived": 2,
-    "mutated": 2
+    "mutated": 2,
     "random": 6
 }
 
