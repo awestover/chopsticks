@@ -7,7 +7,7 @@ it is just a point value (reset every generation) indicating how good you are
 
 brains is the list of look up tables for each competitor
 brains = [ Look up tables for all of the computers that will be competing  ]
-brains[i] = {"Previous":[Previous], "Nexts":[Nexts] }
+brains[i] = {"Previous":[Previous], "Next":[Next] }
 
 population dictionaries specify the makeup of a population
 later add more categories like inheriting brain initialization from humans later
@@ -210,7 +210,7 @@ def playMatch(brain0, brain1):
 # add an entry to the look up table
 def addEntry(brain, prevState, state):
     brain["Previous"].append(prevState)
-    brain["Nexts"].append(state)
+    brain["Next"].append(state)
     return brain
 
 # get the next generation from the last  generation
@@ -238,30 +238,25 @@ def nextGen(brains, scores, population_makeup):
         cycle = (cycle + 1) % population_makeup["survived"]
 
     for k in range(0, population_makeup["random"]):
-        nextBrains.append( {"Previous":[], "Nexts":[]} )
+        nextBrains.append( {"Previous":[], "Next":[]} )
 
     return nextBrains
 
 def mutate(brain):
     # lose some of your strategy, it will be randomly replaced on a as needed basis
-    mutated = {"Previous": [], "Nexts": []}
+    mutated = {"Previous": [], "Next": []}
     for b in range(0, len(brain["Previous"])):
         if random.random() > MUTATE_RATE:  #not a mutation
             mutated["Previous"].append(brain["Previous"][b])
-            mutated["Nexts"].append(brain["Nexts"][b])
+            mutated["Next"].append(brain["Next"][b])
     return mutated
 
 # outputs the final strategy brain to a csv for use against human opponents or something
 def writeStrategy(strategy):
-    s1 = listToString(state1)
-    s2 = listToString(state2)
-
-    nextStrat = {
-        "Previous": s1,
-        "Next": s2
-    }
-
-    stratCsv = stratCsv.append(nextStrat, ignore_index=True)
+    for s in range(0, len(strategy["Previous"])):
+        strategy["Previous"][s] = listToString(strategy["Previous"][s])
+        strategy["Next"][s] = listToString(strategy["Next"][s])
+    stratCsv = pd.DataFrame(strategy)
     stratCsv = stratCsv[["Previous", "Next"]]
     stratCsv.to_csv(strategyFile, index=False)
 

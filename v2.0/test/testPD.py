@@ -1,5 +1,4 @@
 import pandas as pd
-import os
 strategyFile = "strategy.csv"
 strat = {
     "Previous": ["11112341", "asdfasdf23422"],
