@@ -2,7 +2,6 @@
 import speech_recognition as sr
 
 def getIn():
-    numbers = "zero one two three four five six seven eight nine".split(" ")
     # get audio from the microphone
     r = sr.Recognizer()
     res = []
@@ -16,12 +15,22 @@ def getIn():
                     out = r.recognize_google(audio).lower()
                     print("You said " + out)
 
+                    if " " not in out:
+                        s = list(string)
+                        for el in s:
+                            try:
+                                res.append(int(el))
+                            except:
+                                pass
+                        if len(res) == 4:
+                            return [res, "absolute"]
+
                     for string in out.split(" "):
                         try:
                             res.append(int(string))
                         except:
-                            if string in numbers:
-                                res.append(numbers.index(string))
+                            if num(string):
+                                res.append(num(string))
 
                     if len(res) == 2:
                         if "hit" in out:
@@ -44,6 +53,14 @@ def getIn():
     print(res)
 
 
+def num(string):
+    numbers = [['zero'], ['one', 'won'], ['two', 'to', 'too'], ['three'], ['four', 'for'], ['five'], ['six'], ['seven'], ['eight'], ['nine']]
+    for i in range(0, len(numbers)):
+        if string in numbers[i]:
+            return i
+    return False
+
+
 def parseGetIn(state, mod=5):
     res = [[-1, -1, -1, -1], "na"]
     while res[0] == [-1, -1, -1, -1]:
@@ -53,13 +70,11 @@ def parseGetIn(state, mod=5):
         if res[1] == "hit":
             for i in range(0, 2):
                 for j in range(2, 4):
-                    if res[0][0] == state[i]:
-                        if res[0][1] == state[j]:
-                            res[0] = state[:]
-                            res[0][j] = (state[i] + state[j]) % mod
+                    if res[0][0] == state[i] and res[0][1] == state[j]:
+                        res[0] = state[:]
+                        res[0][j] = (state[i] + state[j]) % mod
         elif res[1] == "switch":
             res[0] = [res[0][0], res[0][1], state[2], state[3]]
-
     return res[0]
 
 def inputPrompt():

@@ -7,7 +7,7 @@ except:
     import pyttsx
 import pandas as pd
 import random
-import say
+import sys
 sys.path.insert(0, "..")
 from universal_functions import *
 from base_functions import *
@@ -44,7 +44,7 @@ def s_inputState(state, strategyFile, mod=5, mic=True):
         if mic:
             print("-"*1000)
             print(nextMove, state)
-            nextMove = parseGetIn(state, mod)
+            nextMove = conform(parseGetIn(state, mod))
         else:
             nextMove = parseState(input("input move values, space seperated\t"))
     addLookupEntry(state, nextMove, strategyFile=strategyFile)

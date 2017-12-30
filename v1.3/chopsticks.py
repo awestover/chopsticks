@@ -34,7 +34,7 @@ else:
     player = "computer"
 
 mic = True
-micAns = input("Would you like to use the microphone for your speech input?(y/n)")
+micAns = input("Would you like to use the microphone for your speech input?(y/n)\t")
 if len(micAns) > 0:
     if micAns[0].lower() == 'n':
         mic = False
