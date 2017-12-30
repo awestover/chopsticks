@@ -52,6 +52,7 @@ def validMove(lastState, nextState, mod=5):
         return True
     return False
 
+# do not make the computer check this, only the human
 # the most obvious things which must be true
 def baseValidMove(lastState, nextState, mod=5):
     # wrong size!
@@ -73,21 +74,6 @@ def baseValidMove(lastState, nextState, mod=5):
 
     return True # submit for more evaluation
 
-# all reorderings of a hand
-def permHands(state):
-    out = []
-    perms = ["0123", "0132", "1023", "1032"]
-    for i in perms:
-        cur = []
-        c = parseNoSpaceString(i)
-        for el in c:
-            cur.append(state[el])
-        out.append(cur)
-    return out
-
-# checks if 2 states are identical
-def sameState(state1, state2):
-    return state2 in permHands(state1)
 
 # turns a string of numbers with no spaces in between them to a list of integers
 def parseNoSpaceString(s):
@@ -105,25 +91,48 @@ def parseState(state):
 
 # generates a random state, not neccecarily valid
 def randomState(mod=5):
-    return [random.randint(0, mod - 1) for i in range(0, 4)]
+    return conform([random.randint(0, mod - 1) for i in range(0, 4)])
+
+# gets a move from moves that we know are good
+def smartRandomState(previousState, mod=5):
+    return random.choice(possibleNextMoves(previousState, mod=mod))
+
+# smarter random state, does every possible hit and every possible switch not every possible state
+def possibleNextMoves(p, mod=5):
+    lc = []  # probably legit hits, still pass it through validMove checker though
+    # hits
+    for i in range(0, 2):
+        for j in range(2, 4):
+            if p[i] != 0 and p[j] != 0: # 0 hit is not allowed
+                cur = p[:]
+                cur[j] = (cur[i] + cur[j]) % mod
+                lc.append(conform(cur))
+    # switches
+    # note these are already conformed
+    cc = p[:]
+    cc[1] = cc[0] + cc[1]
+    cc[0] = 0
+    while cc[1] >= cc[0]:
+        if cc[1] < mod:
+            lc.append(cc[:])
+            cc[0] += 1
+            cc[1] -= 1
+    return lc
 
 # computer move
-def advanceState(state, brain):
+def advanceState(state, brain, mod=5):
     lookUp = lookUpNextMove(state, brain)
     if lookUp != []:
         return parseState(random.choice(lookUp))
     else:
-        r = randomState()
-        while gameOver(r) == 1 or not validMove(state, r):
-            r = randomState()
-        return r
+        return smartRandomState(state, mod=5)
 
 # looks up a move in the table, returns all recorder next moves
 def lookUpNextMove(lastMove, brain):
     nexts = [] # this should really only have 1 or zero entries, fix this waste later...
     for i in range(0, len(brain["Previous"])):
         # real eqaulity check
-        if sameState(listToString(brain["Previous"][i]), listToString(lastMove)):
+        if listToString(brain["Previous"][i]) == listToString(lastMove):
             nexts.append(brain["Next"][i])
     return nexts
 
