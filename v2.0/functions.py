@@ -114,7 +114,8 @@ def possibleNextMoves(p, mod=5):
     cc[0] = 0
     while cc[1] >= cc[0]:
         if cc[1] < mod:
-            lc.append(cc[:])
+            if cc[0] != p[0]:  # can not be the same strategy you already have
+                lc.append(cc[:])
         cc[0] += 1
         cc[1] -= 1
     return lc
@@ -129,9 +130,9 @@ def advanceState(state, brain, mod=5):
 
 # looks up a move in the table, returns all recorder next moves
 def lookUpNextMove(lastMove, brain):
-    nexts = [] # this should really only have 1 or zero entries, fix this waste later...
+    nexts = []
     for i in range(0, len(brain["Previous"])):
-        # real eqaulity check
+        # note that these should be conformed
         if listToString(brain["Previous"][i]) == listToString(lastMove):
             nexts.append(brain["Next"][i])
     return nexts
@@ -158,7 +159,9 @@ def playMatch(brain0, brain1):
     turn = 0
     shift = random.randint(0, 1)  # who goes first?
     state = [1, 1, 1, 1]
+    import pdb
     while gameOver(state, depth=turn) == -1:
+        pdb.set_trace()
         if (turn + shift) % 2 == 0:  # brain0
             prevState = state[:]
             state = advanceState(state, brain0)
@@ -168,7 +171,7 @@ def playMatch(brain0, brain1):
             # copy the old state
             prevState = state[:]
             # make the choice
-            state =  advanceState(state, brain1)
+            state = advanceState(state, brain1)
             brain1 = addEntry(brain1, prevState, state)
             # we must flip twice
             state = invertState(state)
