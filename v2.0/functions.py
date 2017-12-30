@@ -1,3 +1,6 @@
+import pandas as pd
+import random
+
 # turn a list into a string
 def listToString(l):
     le = [str(e) for e in l]
@@ -170,9 +173,8 @@ def addEntry(brain, prevState, state):
     return brain
 
 # get the next generation from the last  generation
-def nextGen(brains, scores, population_makeup):
+def nextGen(brains, scores, population_makeup, MUTATE_RATE):
     nextBrains = []
-
     # get some good ones
     topIndices = []
     while len(topIndices) < population_makeup["survived"]:
@@ -190,7 +192,7 @@ def nextGen(brains, scores, population_makeup):
 
     cycle = 0
     for j in range(0, population_makeup["mutated"]):
-        nextBrains.append(mutate(brains[topIndices[cycle]]))
+        nextBrains.append(mutate(brains[topIndices[cycle]], MUTATE_RATE))
         cycle = (cycle + 1) % population_makeup["survived"]
 
     for k in range(0, population_makeup["random"]):
@@ -199,7 +201,7 @@ def nextGen(brains, scores, population_makeup):
     return nextBrains
 
 # mutate a strategy
-def mutate(brain):
+def mutate(brain, MUTATE_RATE):
     # lose some of your strategy, it will be randomly replaced on a as needed basis
     mutated = {"Previous": [], "Next": []}
     for b in range(0, len(brain["Previous"])):
@@ -221,3 +223,16 @@ def writeStrategy(strategy):
 # which brain is the best
 def bestBrain(brains, scores):
     return brains[scores.index(max(scores))]
+
+# makes it so that all identical hand states are treated as the same
+def conform(state):
+    """
+    new format is
+    [ small big small big]
+    without loss of generality
+    """
+    return [min(state[0], state[1]), max(state[0], state[1]), min(state[2], state[3]), max(state[2], state[3])]
+
+
+
+#--

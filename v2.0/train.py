@@ -1,4 +1,7 @@
 """
+Probably should get a better function for fighting (not random opponents)
+track growth
+
 initially random AIs evolve over time
 clean and comment in a later verision
 Notes:
@@ -14,7 +17,6 @@ later add more categories like inheriting brain initialization from humans later
 
 """
 from functions import *
-import pandas as pd
 import random
 
 # these hyperparameters could stand to be tuned
@@ -47,9 +49,9 @@ POPULATION = {
 for generation in range (0, NUM_GENERATIONS):
     print("Generation " + str(generation))
     if generation == 0:
-        brains = nextGen(None, None, POPULATION_INITIAL)
+        brains = nextGen(None, None, POPULATION_INITIAL, None)
     else:
-        brains = nextGen(brains, scores, POPULATION)
+        brains = nextGen(brains, scores, POPULATION, MUTATE_RATE)
     scores = [0 for i in range(0, POPULATION_SIZE)]
     for brain in range(0, POPULATION_SIZE):
         for matches in range(0, MATCHES_PER_GENERATION):
