@@ -115,8 +115,8 @@ def possibleNextMoves(p, mod=5):
     while cc[1] >= cc[0]:
         if cc[1] < mod:
             lc.append(cc[:])
-            cc[0] += 1
-            cc[1] -= 1
+        cc[0] += 1
+        cc[1] -= 1
     return lc
 
 # computer move
