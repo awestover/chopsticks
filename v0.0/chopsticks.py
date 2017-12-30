@@ -8,7 +8,9 @@ strategyFile = "strategy.csv"
 # what modulus is the game played in?
 mod = 5
 try:
-    mod = int(input("what modulus would you like to play in? (answer an integer between 2 and 9 inclusive)"))
+    mod = int(input("what modulus would you like to play in? (answer an integer between 2 and 9 inclusive)\t"))
+except:
+    pass
 if not os.path.exists(modFileName(strategyFile, mod=mod)):
     headDf = pd.DataFrame(columns=["Previous", "Next"])
     headDf.to_csv(modFileName(strategyFile, mod=mod), index=False)
@@ -36,6 +38,7 @@ while gameOver(state) == -1:
             time.sleep(1)
         else:
             print("Player turn")
+            print(state)
             state = conform(inputState(state, mod=mod))
     else:
         print("Player turn")
