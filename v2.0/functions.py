@@ -234,7 +234,3 @@ def conform(state):
     without loss of generality
     """
     return [min(state[0], state[1]), max(state[0], state[1]), min(state[2], state[3]), max(state[2], state[3])]
-
-
-
-#--
