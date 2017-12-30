@@ -13,7 +13,7 @@ strategyFile = "strategy.csv"
 # but this is done elsewhere
 def inputState(state, mod=5):
     nextMove = [-1, -1, -1, -1]
-    while not validMove(state, nextMove):
+    while not validMove(state, nextMove, mod=mod):
         nextMove = conform(parseState(input("input move values, space seperated\t")))
     addLookupEntry(state, nextMove)
     return nextMove
