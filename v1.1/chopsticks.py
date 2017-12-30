@@ -14,6 +14,7 @@ try:
     mod = int(input("what modulus would you like to play in? (answer an integer between 2 and 9 inclusive)\t"))
 except:
     pass
+    
 if not os.path.exists(modFileName(strategyFile, mod=mod)):
     headDf = pd.DataFrame(columns=["Previous", "Next"])
     headDf.to_csv(modFileName(strategyFile, mod=mod), index=False)

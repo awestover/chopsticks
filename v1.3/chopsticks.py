@@ -1,15 +1,23 @@
 from updatePicture import updatePicture
 from drawState import drawState
-from functions import *
+from speak_functions import *
 import time
 import sys
 import os
+sys.path.insert(0, "..")
+from base_functions import *
+from universal_functions import *
 
-strategyFile = "strategy.csv"
+# what modulus is the game played in?
+mod = 5
+try:
+    mod = int(input("what modulus would you like to play in? (answer an integer between 2 and 9 inclusive)\t"))
+except:
+    pass
 
-if not os.path.exists(strategyFile):
+if not os.path.exists(modFileName(strategyFile, mod=mod)):
     headDf = pd.DataFrame(columns=["Previous", "Next"])
-    headDf.to_csv(strategyFile, index=False)
+    headDf.to_csv(modFileName(strategyFile, mod=mod), index=False)
 
 print("Let's begin")
 
@@ -37,18 +45,18 @@ while gameOver(state) == -1:
         if player == "computer":
             print("My turn")
             time.sleep(0.5)
-            state = advanceState(state)
+            state = advanceState(state, strategyFile, mod=mod)
             time.sleep(1)
         else:
             print("Player turn")
-            state = inputState(state)
+            state = conform(s_inputState(state, strategyFile, mod=mod, mic=mic))
     else:
         print("Player turn")
         promptMove()
         # note the state assumes the current player is listed first
         state = invertState(state)
         # make the choice
-        state = inputState(state, mic=mic)
+        state = conform(s_inputState(state, strategyFile, mod=mod, mic=mic))
         # we must flip twice
         state = invertState(state)
     turn += 1
