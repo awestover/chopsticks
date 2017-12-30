@@ -81,13 +81,13 @@ def parseNoSpaceString(s):
     return [int(i) for i in s]
 
 # parse a string of space seperated values to an array
-def parseState(state):
-    try:
-        state = state.strip().split(" ")
-        state = [int(s) for s in state]
-    except:
-        state = [-1, -1, -1, -1]
-    return state
+# def parseState(state):
+#     try:
+#         state = state.strip().split(" ")
+#         state = [int(s) for s in state]
+#     except:
+#         state = [-1, -1, -1, -1]
+#     return state
 
 # generates a random state, not neccecarily valid
 def randomState(mod=5):
@@ -124,7 +124,7 @@ def possibleNextMoves(p, mod=5):
 def advanceState(state, brain, mod=5):
     lookUp = lookUpNextMove(state, brain)
     if lookUp != []:
-        return parseState(random.choice(lookUp))
+        return random.choice(lookUp)
     else:
         return smartRandomState(state, mod=5)
 
@@ -150,6 +150,7 @@ def gameOver(state, depth=0):
     elif p2:
         return 2
     elif depth > 1000:
+        print("TIE")
         return 0
     else:
         return -1
@@ -159,9 +160,7 @@ def playMatch(brain0, brain1):
     turn = 0
     shift = random.randint(0, 1)  # who goes first?
     state = [1, 1, 1, 1]
-    import pdb
     while gameOver(state, depth=turn) == -1:
-        pdb.set_trace()
         if (turn + shift) % 2 == 0:  # brain0
             prevState = state[:]
             state = advanceState(state, brain0)
