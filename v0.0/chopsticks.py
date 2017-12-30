@@ -37,7 +37,7 @@ while gameOver(state) == -1:
             print("My turn")
             time.sleep(0.5)
             state = conform(advanceState(state, strategyFile, mod=mod))
-            time.sleep(1)
+            time.sleep(0.5)
         else:
             print("Player turn")
             print(state)
