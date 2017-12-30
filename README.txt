@@ -2,6 +2,8 @@ This is a project where we attempt to make a cool chopsticks player
 
 Outline:
 
+Note all strategies are now mod n compatible, but we do not yet have good AIs
+
 v0.0 - most basic possible player playing against player or computer. Records all player moves.
 
 v1.0 - Records player moves. Windows only open picture, breaks on other os.

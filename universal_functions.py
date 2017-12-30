@@ -1,4 +1,6 @@
 # functions that are used by every version and do not change
+# these may have to be overriden / not used in very different versions of the game
+# ie preservation
 import random
 
 # gameplay

@@ -1,7 +1,9 @@
-from functions import *
 import time
 import sys
 import os
+sys.path.insert(0, "..")
+from base_functions import *
+from universal_functions import *
 
 strategyFile = "strategy.csv"
 
@@ -34,19 +36,19 @@ while gameOver(state) == -1:
         if player == "computer":
             print("My turn")
             time.sleep(0.5)
-            state = conform(advanceState(state, mod=mod))
+            state = conform(advanceState(state, strategyFile, mod=mod))
             time.sleep(1)
         else:
             print("Player turn")
             print(state)
-            state = conform(inputState(state, mod=mod))
+            state = conform(inputState(state, strategyFile, mod=mod))
     else:
         print("Player turn")
         print(invertState(state))
         # note the state assumes the current player is listed first
         state = invertState(state)
         # make the choice
-        state = conform(inputState(state, mod=mod))
+        state = conform(inputState(state, strategyFile, mod=mod))
         # we must flip twice
         state = invertState(state)
     turn += 1

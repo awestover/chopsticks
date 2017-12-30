@@ -1,3 +1,5 @@
+# functions used by all v0 and v1s
+
 import pandas as pd
 import random
 import sys
@@ -32,7 +34,6 @@ def parseState(state):
         state = [-1, -1, -1, -1]
     return state
 
-
 # computer move
 def advanceState(state, strategyFile, mod=5):
     lookUp = lookUpNextMove(state, strategyFile, mod=mod)
@@ -40,7 +41,6 @@ def advanceState(state, strategyFile, mod=5):
         return parseState(random.choice(lookUp))
     else:
         return randomState(state, mod=mod)
-
 
 # csv i/o
 
