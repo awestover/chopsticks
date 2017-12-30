@@ -21,8 +21,8 @@ import random
 
 # these hyperparameters could stand to be tuned
 POPULATION_SIZE = 25
-MATCHES_PER_GENERATION = 1
-NUM_GENERATIONS = 1
+MATCHES_PER_GENERATION = 25
+NUM_GENERATIONS = 1000
 
 MUTATE_RATE = 0.3
 
