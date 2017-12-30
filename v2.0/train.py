@@ -21,7 +21,6 @@ import random
 
 # these hyperparameters could stand to be tuned
 POPULATION_SIZE = 25
-MATCHES_PER_GENERATION = 25
 NUM_GENERATIONS = 1000
 
 MUTATE_RATE = 0.3
@@ -54,25 +53,23 @@ for generation in range (0, NUM_GENERATIONS):
         brains = nextGen(brains, scores, POPULATION, MUTATE_RATE)
     scores = [0 for i in range(0, POPULATION_SIZE)]
     for brain in range(0, POPULATION_SIZE):
-        for matches in range(0, MATCHES_PER_GENERATION):
-            match = brain  # initialize to fail case just cause
-            while match == brain:
-                match = random.randint(0, POPULATION_SIZE - 1)
-            res = playMatch(brains[brain], brains[match])
-            brains[brain] = res[1]
-            brains[match] = res[2]
-            result = res[0]
-            # UPDATE SCORE
-            if result == 1:
-                scores[match] += POINTS["loss"]
-                scores[brain] += POINTS["win"]
-            elif result == 2:
-                scores[match] += POINTS["win"]
-                scores[brain] += POINTS["loss"]
-            elif result == 0: # tie
-                scores[match] += POINTS["tie"]
-                scores[brain] += POINTS["tie"]
-            # no other possibilities, the game can't end with -1 gameOver
+        for matches in range(0, POPULATION_SIZE):
+            if matches != brain:
+                res = playMatch(brains[brain], brains[match])
+                brains[brain] = res[1]
+                brains[match] = res[2]
+                result = res[0]
+                # UPDATE SCORE
+                if result == 1:
+                    scores[match] += POINTS["loss"]
+                    scores[brain] += POINTS["win"]
+                elif result == 2:
+                    scores[match] += POINTS["win"]
+                    scores[brain] += POINTS["loss"]
+                elif result == 0: # tie
+                    scores[match] += POINTS["tie"]
+                    scores[brain] += POINTS["tie"]
+                # no other possibilities, the game can't end with -1 gameOver
 
 
 # this is not correct, we want the best brain, fix later
