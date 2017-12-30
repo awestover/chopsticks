@@ -39,7 +39,7 @@ plt.ylabel("Scores")
 
 # these hyperparameters could stand to be tuned
 # Note: you play every oponent twice
-POPULATION_SIZE = 3
+POPULATION_SIZE = 25
 NUM_GENERATIONS = 1000
 
 MUTATE_RATE = 0.3
