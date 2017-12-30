@@ -48,7 +48,7 @@ while gameOver(state) == -1:
             time.sleep(0.5)
         else:
             print("Player turn")
-            state = conform(inputState(state, strategyFile, mod=mod))
+            state = conform(s_inputState(state, strategyFile, mod=mod, mic=mic))
     else:
         print("Player turn")
         promptMove()
