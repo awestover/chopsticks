@@ -27,18 +27,18 @@ while gameOver(state) == -1:
         if player == "computer":
             print("My turn")
             time.sleep(0.5)
-            state = advanceState(state)
+            state = conform(advanceState(state))
             time.sleep(1)
         else:
             print("Player turn")
-            state = inputState(state)
+            state = conform(inputState(state))
     else:
         print("Player turn")
         print(invertState(state))
         # note the state assumes the current player is listed first
         state = invertState(state)
         # make the choice
-        state = inputState(state)
+        state = conform(inputState(state))
         # we must flip twice
         state = invertState(state)
     turn += 1

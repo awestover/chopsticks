@@ -39,8 +39,8 @@ plt.ylabel("Scores")
 
 # these hyperparameters could stand to be tuned
 # Note: you play every oponent twice
-POPULATION_SIZE = 25
-NUM_GENERATIONS = 1000
+POPULATION_SIZE = 5
+NUM_GENERATIONS = 3
 
 MUTATE_RATE = 0.3
 
@@ -53,13 +53,13 @@ POINTS = {
 POPULATION_INITIAL = {
     "survived": 0,
     "mutated": 0,
-    "random": 3
+    "random": 5
 }
 
 POPULATION = {
     "survived": 1,
-    "mutated": 1,
-    "random": 1
+    "mutated": 2,
+    "random": 2
 }
 
 
@@ -78,8 +78,8 @@ for generation in range (0, NUM_GENERATIONS):
             cAvg = sum(scores) / len(scores)
             averageScores.append(cAvg)
             f.write(str( round(cMax,3) ) + "," + str( round(cAvg,3) ) + "\n")
-            plt.scatter(list(range(0, generation)), bestScores, c='r')
-            plt.scatter(list(range(0, generation)), averageScores, c='b')
+            plt.scatter(generation, cMax, c='r')
+            plt.scatter(generation, cAvg, c='b')
             plt.savefig(scorePicFile)
 
     scores = [0 for i in range(0, POPULATION_SIZE)]
