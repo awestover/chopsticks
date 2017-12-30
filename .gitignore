@@ -1,4 +1,5 @@
 dist/
 build/
 chopsticksc.egg-info/
-__pyache__/
+__pycache__/
+*.pyc
