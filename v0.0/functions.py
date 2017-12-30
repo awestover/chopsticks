@@ -15,7 +15,7 @@ def inputState(state, mod=5):
     nextMove = [-1, -1, -1, -1]
     while not validMove(state, nextMove, mod=mod):
         nextMove = conform(parseState(input("input move values, space seperated\t")))
-    addLookupEntry(state, nextMove)
+    addLookupEntry(state, nextMove, mod=mod)
     return nextMove
 
 # checks if a move is allowed
@@ -62,7 +62,7 @@ def possibleNextMoves(p, mod=5):
 
 # computer move
 def advanceState(state, mod=5):
-    lookUp = lookUpNextMove(state)
+    lookUp = lookUpNextMove(state, mod=mod)
     if lookUp != []:
         return parseState(random.choice(lookUp))
     else:
@@ -89,11 +89,11 @@ def listToString(l):
     return " ".join([str(e) for e in l])
 
 # here is how to add to the table
-def addLookupEntry(state1, state2):
+def addLookupEntry(state1, state2, mod=5):
     s1 = listToString(state1)
     s2 = listToString(state2)
 
-    stratCsv = pd.read_csv(strategyFile)
+    stratCsv = pd.read_csv(modFileName(strategyFile, mod=mod))
     nextStrat = {
         "Previous": s1,
         "Next": s2
@@ -101,17 +101,24 @@ def addLookupEntry(state1, state2):
 
     stratCsv = stratCsv.append(nextStrat, ignore_index=True)
     stratCsv = stratCsv[["Previous", "Next"]]
-    stratCsv.to_csv(strategyFile, index=False)
+    stratCsv.to_csv(modFileName(strategyFile), index=False)
 
 # looks up a move in the table, returns all recorded next moves
-def lookUpNextMove(lastMove):
-    stratCsv = pd.read_csv(strategyFile)
+def lookUpNextMove(lastMove, mod=5):
+    stratCsv = pd.read_csv(modFileName(strategyFile, mod=mod))
     nexts = []
     for i in range(0, len(stratCsv["Previous"])):
         # real eqaulity check
         if stratCsv["Previous"][i] == listToString(lastMove):
             nexts.append(stratCsv["Next"][i])
     return nexts
+
+# add the modulus to the filename
+def modFileName(fileName, mod=5):
+    smf = fileName.split(".")
+    smf[0] += str(mod)
+    smf = ".".join(smf)
+    return smf
 
 
 # change hands format

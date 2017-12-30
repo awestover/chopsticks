@@ -5,9 +5,13 @@ import os
 
 strategyFile = "strategy.csv"
 
-if not os.path.exists(strategyFile):
+# what modulus is the game played in?
+mod = 5
+try:
+    mod = int(input("what modulus would you like to play in? (answer an integer between 2 and 9 inclusive)"))
+if not os.path.exists(modFileName(strategyFile, mod=mod)):
     headDf = pd.DataFrame(columns=["Previous", "Next"])
-    headDf.to_csv(strategyFile, index=False)
+    headDf.to_csv(modFileName(strategyFile, mod=mod), index=False)
 
 print("Let's begin")
 
@@ -20,11 +24,10 @@ if "n" in player.lower():
     player = "human"
 else:
     player = "computer"
-# what modulus is the game played in?
-mod = 6
+
 
 # game loop
-while gameOver(state, mod=mod) == -1:
+while gameOver(state) == -1:
     if (turn + shift) % 2 == 0:  # computer move
         if player == "computer":
             print("My turn")
