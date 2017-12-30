@@ -80,15 +80,6 @@ def parseNoSpaceString(s):
     s = list(s)
     return [int(i) for i in s]
 
-# parse a string of space seperated values to an array
-# def parseState(state):
-#     try:
-#         state = state.strip().split(" ")
-#         state = [int(s) for s in state]
-#     except:
-#         state = [-1, -1, -1, -1]
-#     return state
-
 # generates a random state, not neccecarily valid
 def randomState(mod=5):
     return conform([random.randint(0, mod - 1) for i in range(0, 4)])
@@ -149,7 +140,7 @@ def gameOver(state, depth=0):
         return 1
     elif p2:
         return 2
-    elif depth > 1000:
+    elif depth > 100:
         print("TIE")
         return 0
     else:
